@@ -1,11 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
+import GuestLayout from '../layouts/GuestLayout';
 import Index from '../pages/client/Index';
-import Navbar from '../components/client/Navbar';
 
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path='/' element={<Navbar />} />
+           <Route element={<GuestLayout/>}>
+                <Route path='/' element={<Index/>} />
+           </Route>
         </Routes>
     )
 }
