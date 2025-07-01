@@ -1,26 +1,22 @@
 const Header = () => {
     return (
         <>
-            <div className="container-fluid bg-primary px-0 px-md-5 mb-5">
-                <div className="row align-items-center px-3">
-                    <div className="col-lg-6 text-center text-lg-left">
-                        <h4 className="text-white mb-4 mt-5 mt-lg-0">Kids Learning Center</h4>
-                        <h1 className="display-3 font-weight-bold text-white">
-                            New Approach to Kids Education
-                        </h1>
-                        <p className="text-white mb-4">
-                            Sea ipsum kasd eirmod kasd magna, est sea et diam ipsum est amet sed
-                            sit. Ipsum dolor no justo dolor et, lorem ut dolor erat dolore sed
-                            ipsum at ipsum nonumy amet. Clita lorem dolore sed stet et est justo
-                            dolore.
-                        </p>
-                        <a href="" className="btn btn-secondary mt-1 py-3 px-5">Learn More</a>
-                    </div>
-                    <div className="col-lg-6 text-center text-lg-right">
-                        <img className="img-fluid mt-5" src="https://img.freepik.com/premium-vector/vector-illustration-about-concept-online-education-distance-education-training-courses_675567-6279.jpg" alt="" />
-                    </div>
+           <header className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20">
+                <div className="max-w-7xl mx-auto px-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                        Nền tảng học trực tuyến chất lượng cao
+                    </h1>
+                    <p className="text-lg md:text-xl mb-6">
+                    Khám phá hàng trăm khóa học, được giảng dạy bởi các chuyên gia hàng đầu.
+                    </p>
+                    <a
+                        href="#courses"
+                        className="inline-block bg-white text-blue-600 font-semibold px-6 py-3 rounded hover:bg-gray-100 transition"
+                    >
+                        Khám phá khóa học
+                    </a>
                 </div>
-            </div>
+           </header>
         </>
     )
 }
