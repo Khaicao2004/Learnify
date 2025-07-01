@@ -3,7 +3,7 @@ const SectionCourses = ({courses = []}) => {
    return (
         <section className="bg-gray-100 pt-16">
             <div className="max-w-7xl mx-auto px-4">
-                <h2 className="text-3xl font-bold text-center mb-10 text-blue-600">Khóa học nổi bật</h2>
+                <h2 className="text-3xl font-bold text-center mb-10 text-blue-600">Our Popular Courses</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {courses.map(course => (
                         <div 
@@ -11,12 +11,12 @@ const SectionCourses = ({courses = []}) => {
                             key={course.id}
                         >
                            <div className="relative">
-                                <img src={course.thumbnail} alt="" className="w-full h-48 object-cover" />
-                                <span className="absolute top-2 left-2 bg-blue-500 text-white text-xs rounded px-2 py-1">{course.category.name}</span>
-                                <span className="absolute top-2 right-2 bg-green-600 text-white text-xs rounded px-2 py-1">$49.99</span>
+                                <img src={course.thumbnail} alt="" className="w-full h-58 md:h-80 object-cover" />
+                                <span className="absolute top-2 left-2 bg-blue-500 text-white text-xs rounded px-2 py-1 font-semibold">{course.category.name}</span>
+                                <span className="absolute top-2 right-2 bg-green-600 text-white text-xs rounded px-2 py-1 font-semibold">${course.price}</span>
                            </div>
                            <div className="p-4">
-                                <a className="text-lg font-semibold text-gray-800 mb-2 hover:text-blue-600">{course.title}</a>
+                                <a href={`/course-details/${course.slug}`} className="text-lg font-semibold text-gray-800 mb-2 hover:text-blue-600">{course.title}</a>
                                 <p className="text-gray-600 text-sm mb-4">{course.description}</p>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">

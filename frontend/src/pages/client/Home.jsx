@@ -2,6 +2,7 @@ import SectionCourses from "../../components/client/home/SectionCourses";
 import axiosInstance from '../../api/axios';
 import { useEffect, useState } from "react";
 import SectionTeachers from "../../components/client/home/SectionTeachers";
+import Header from "../../components/client/Header";
 const Home = () => {
     const [courses, setCourses] = useState([]);
     const [teachers, setTeachers] = useState([]);
@@ -18,10 +19,11 @@ const Home = () => {
     }, [])
     return (
         <>
-          <main>
-                <SectionCourses  courses={courses} />
-                <SectionTeachers teachers={teachers} />
-          </main>
+            <Header/>
+            <main>
+                    <SectionCourses  courses={courses} />
+                    <SectionTeachers teachers={teachers} />
+            </main>
         </>
     )
 }

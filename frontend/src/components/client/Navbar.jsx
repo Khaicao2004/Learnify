@@ -10,14 +10,14 @@ const Navbar = () => {
 
                     {/* Nav links */}
                     <div className="hidden md:flex space-x-6 text-gray-600 items-center">
-                        <a href="" className="hover:text-blue-500">Trang chủ</a>
-                        <a href="" className="hover:text-blue-500">Về chúng tôi</a>
-                        <a href="" className="hover:text-blue-500">Khoá học</a>
-                        <a href="" className="hover:text-blue-500">Giảng viên</a>
-                        <a href="" className="hover:text-blue-500">Liên hệ</a>
+                        <a href="/" className="hover:text-blue-500">Home</a>
+                        <a href="#" className="hover:text-blue-500">About</a>
+                        <a href="#" className="hover:text-blue-500">Courses</a>
+                        <a href="#" className="hover:text-blue-500">Teachers</a>
+                        <a href="#" className="hover:text-blue-500">Contact</a>
                     </div>
                     <div className="hidden md:block">
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Tham gia</button>
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Join for free</button>
                     </div>
                 </div>
             </nav>
