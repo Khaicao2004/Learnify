@@ -12,7 +12,7 @@ const Navbar = () => {
                     <div className="hidden md:flex space-x-6 text-gray-600 items-center">
                         <a href="/" className="hover:text-blue-500">Home</a>
                         <a href="#" className="hover:text-blue-500">About</a>
-                        <a href="#" className="hover:text-blue-500">Courses</a>
+                        <a href="/courses" className="hover:text-blue-500">Courses</a>
                         <a href="#" className="hover:text-blue-500">Teachers</a>
                         <a href="#" className="hover:text-blue-500">Contact</a>
                     </div>

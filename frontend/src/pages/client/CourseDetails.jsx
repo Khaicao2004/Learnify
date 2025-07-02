@@ -8,7 +8,9 @@ import { COURSE_LEVEL_TEXT_MAP, COURSE_LEVEL_CLASS_MAP } from "../../constants";
 const CourseDetails = () => {
     const { slug } = useParams();
     const [course, setCourse] = useState({});
-    console.log(course);
+    const [selectedLesson, setSelectedLesson] = useState(null);
+
+    console.log(selectedLesson);
 
     useEffect(() => {
         axiosInstance.get(`courses/${slug}`)
@@ -16,7 +18,7 @@ const CourseDetails = () => {
             .catch(error => console.error(error))
     }, [slug])
     return (
-        <div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="container mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2 space-x-6">
                 <img src="https://oes.vn/wp-content/uploads/2024/07/Training-course-la-gi-Kham-pha-12-loai-chuong-trinh-dao-tao-nhan-vien-hieu-qua.png" alt="" className="w-full h-50 md:h-100 rounded" />
                 <div>
@@ -46,7 +48,7 @@ const CourseDetails = () => {
                                     <DisclosurePanel className="px-4 pb-2 pt-2 text-sm text-gray-700">
                                         <ul className="space-y-2">
                                             {section.lessons?.map((lesson) => (
-                                                <li className="flex items-center justify-between" key={lesson.id}>
+                                                <li className="flex items-center justify-between" onClick={(() => setSelectedLesson(lesson))} key={lesson.id}>
                                                     <div className="flex items-center gap-4">
                                                         <TvIcon className="w-4" />
                                                         <span>{lesson.title}</span>
@@ -54,6 +56,24 @@ const CourseDetails = () => {
                                                     <span className="text-gray-500 text-sm font-normal">{lesson.duration}min</span>
                                                 </li>
                                             ))}
+                                            {selectedLesson && (
+                                                <div className="mt-8 bg-white p-6 rounded shadow">
+                                                    <h3 className="text-xl font-semibold mb-2">{selectedLesson.title}</h3>
+                                                    <div className="aspect-video w-full mb-4">
+                                                    <iframe
+                                                        src={selectedLesson.video_path}
+                                                        className="w-full h-full rounded"
+                                                        allowFullScreen
+                                                        title={selectedLesson.title}
+                                                    />
+                                                    </div>
+                                                    {selectedLesson.content && (
+                                                    <div className="prose max-w-none text-gray-700">
+                                                        {selectedLesson.content}
+                                                    </div>
+                                                    )}
+                                                </div>
+                                            )}
                                         </ul>
                                     </DisclosurePanel>
                                 </>
@@ -83,7 +103,7 @@ const CourseDetails = () => {
                 </ul>
 
                 {/* Nút enroll */}
-                <button className="w-full bg-[#00254D] text-white py-3 uppercase font-semibold text-sm hover:bg-[#001c3d] transition">
+                <button className="w-full bg-slate-800 text-white py-3 uppercase font-semibold text-sm hover:bg-slate-900 transition">
                     Enroll the Course
                 </button>
 
@@ -92,19 +112,15 @@ const CourseDetails = () => {
                     <h4 className="text-lg font-semibold mb-4 border-b">Reviews</h4>
 
                     <div className="space-y-4">
-                        {['Quality', 'Punctuality', 'Quality'].map((label, i) => (
-                            <div key={i} className="flex justify-between items-center">
-                                <span className="text-gray-700">{label}</span>
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-700">Good job</span>
                                 <div className="flex items-center space-x-1 text-yellow-400 text-lg">
-                                    {Array.from({ length: 5 }).map((_, idx) => (
-                                        <span key={idx} className={idx < 3 ? 'text-yellow-400' : 'text-gray-300'}>
-                                            ★
+                                        <span  className={'text-yellow-400'}>
+                                            ★ ★ ★ ☆ ☆
                                         </span>
-                                    ))}
                                 </div>
                                 <span className="text-gray-500 text-xs">Outstanding</span>
                             </div>
-                        ))}
                     </div>
 
                     {/* Feedback */}
@@ -116,7 +132,7 @@ const CourseDetails = () => {
                             placeholder="Write your feedback..."
                         ></textarea>
                         <div className="mt-4 text-right">
-                            <button className="bg-[#00254D] text-white px-6 py-2 uppercase text-sm font-semibold hover:bg-[#001c3d]">
+                            <button className="bg-slate-800 text-white px-6 py-2 uppercase text-sm font-semibold hover:bg-slate-900">
                                 Submit
                             </button>
                         </div>
