@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Authenticate;
 use App\Http\Controllers\Client\CourseController;
 use App\Http\Controllers\Client\TeacherController;
 use Illuminate\Http\Request;
@@ -17,3 +18,6 @@ Route::get('courses/{slug}', [CourseController::class, 'courseDetails'])->name('
 // Teacher
 Route::get('limit-teachers', [TeacherController::class, 'homeTeachers'])->name('teachers.homeTeachers');
 Route::get('teachers', [TeacherController::class, 'teachers'])->name('teachers');
+
+//auth
+Route::post('register', [Authenticate::class, 'register'])->name('auth.register');
