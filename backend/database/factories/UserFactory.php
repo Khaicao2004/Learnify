@@ -26,6 +26,10 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'phone_number' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'avatar' => 'https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/12/27/b6b0b4c6-e266-487b-bf65-bf519c674e81.jpg',
+            'bio' => fake()->paragraph(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

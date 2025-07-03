@@ -18,7 +18,8 @@ class CategorySeeder extends Seeder
         foreach($categories as $category){
             Category::query()->create([
                 'name' => $category,
-                'slug' => Str::slug($category)
+                'slug' => Str::slug($category),
+                'description' => fake()->paragraph()
             ]);
         }
     }

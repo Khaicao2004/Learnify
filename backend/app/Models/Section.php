@@ -9,6 +9,8 @@ class Section extends Model
 {
     use HasFactory;
 
+    protected $appends = ['duration', 'lessons_count'];
+
     protected $fillable = [
         'course_id',
         'title',
@@ -22,6 +24,16 @@ class Section extends Model
 
     public function lessons()
     {
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Lesson::class)->orderBy('sort_order');
+    }
+
+    public function getDurationAttribute()
+    {
+        return $this->lessons()->sum('duration');
+    }
+
+    public function getLessonsCountAttribute()
+    {
+        return $this->lessons()->count();
     }
 }

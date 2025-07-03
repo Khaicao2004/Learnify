@@ -6,7 +6,6 @@ const GuestLayout = () => {
     return (
         <>
             <Navbar/>
-            <Header/>
                 <Outlet/>
             <Footer/>
         </>
