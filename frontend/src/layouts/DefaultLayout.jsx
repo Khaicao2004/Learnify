@@ -7,16 +7,16 @@ const DefaultLayout = () => {
         return <Navigate to="/login" />
     }
     return (
-        <div id="defaultLayout">
+        <div id="defaultLayout" className="flex justify-between p-4">
             <header>
-            <div className="content">
-                Admin Layout
-            </div>
-        <div>
-            {user.name}
+                <div className="content">
+                    Admin Layout
+                </div>
+                {user.name}
             <a href="#" className="bg-blue-400 px-4 py-2">logout</a>
-        </div>
             </header>
+        <div>
+        </div>
             <Outlet/>
         </div>
     )

@@ -6,18 +6,18 @@ const Register = () => {
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
-    const handleSubmit = (e) => {
+    const {setUser, setToken} = useStateContext();
+    const Submit = (e) => {
         e.preventDefault();
         const payload = {
             name: nameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
         }
-        const {setUser, setToken} = useStateContext();
         
         axiosInstance.post('register', payload).then(({data}) => {
-            setUser(data.setUser);
-            setToken(data.setToken);
+            setUser(data.user);
+            setToken(data.token);
         }).catch(err => {
             const response = err.response;
             if (response && response.status === 422) {
@@ -33,7 +33,7 @@ const Register = () => {
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold text-blue-500 mb-6 text-center">Create Account</h2>
-                <form className="space-y-5" onSubmit={handleSubmit}>
+                <form className="space-y-5" onSubmit={Submit}>
                      <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Name</label>
                         <input ref={nameRef} type="text"  name="name" id="name" placeholder="Enter name" className="w-full px-4 py-3 border border-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" />

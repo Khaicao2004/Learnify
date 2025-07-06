@@ -22,3 +22,4 @@ Route::get('teachers', [TeacherController::class, 'teachers'])->name('teachers')
 //auth
 Route::post('register', [Authenticate::class, 'register'])->name('auth.register');
 Route::post('login', [Authenticate::class, 'login'])->name('auth.login');
+Route::post('logout', [Authenticate::class, 'logout'])->name('auth.logout');
