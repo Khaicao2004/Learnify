@@ -1,4 +1,19 @@
+import { Navigate } from "react-router-dom";
+import axiosInstance from "../../api/axios";
+import { useStateContext } from "../../contexts/contextprovider";
 const Navbar = () => {
+    const {user, setUser, token, setToken} = useStateContext();
+     if(!token) {
+        return <Navigate to="/login" />
+    }
+
+    const onLogout = () => {
+        axiosInstance.post('logout').then(() => {
+            setUser(null);
+            setToken(null);
+        }).catch(err => console.error(err)
+    )
+    }
     return (
         <>
             <nav className="bg-white shadow sticky top-0 z-50">
@@ -16,9 +31,12 @@ const Navbar = () => {
                         <a href="/teachers" className="hover:text-blue-500">Teachers</a>
                         <a href="#" className="hover:text-blue-500">Contact</a>
                     </div>
-                    <div className="hidden md:block">
-                        <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Join for free</button>
-                    </div>
+                    {user && (
+                        <div className="hidden md:block space-x-2">
+                            <span>{user.name}</span>
+                            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={onLogout}>Logout</button>
+                        </div>
+                    )}
                 </div>
             </nav>
         </>

@@ -1,20 +1,13 @@
-import Footer from "../components/client/Footer";
-import Header from "../components/client/Header";
-import Navbar from "../components/client/Navbar";
 import { Navigate, Outlet } from "react-router-dom";
-import { useStateContext } from "../contexts/contextProvider";
-
+import { useStateContext } from "../contexts/contextprovider";
 const GuestLayout = () => {
     const {token} = useStateContext();
-    if(token) {
-        return <Navigate to="/courses" />
+     if(token) {
+        return <Navigate to="/" />
     }
     return (
         <>
-            <Navbar/>
-            <Header />
-                <Outlet/>
-            <Footer/>
+            <Outlet/>
         </>
     )
 };

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import axiosInstance from "../../api/axios";
-import { useStateContext } from "../../contexts/contextProvider";
+import { useStateContext } from "../../contexts/contextprovider";
 
 const Register = () => {
     const nameRef = useRef();

@@ -1,6 +1,5 @@
 import axiosInstance from '../../api/axios';
 import { useEffect, useState } from "react";
-import Header from "../../components/client/Header";
 import CardTeachers from '../../components/client/CardTeachers';
 import CardCourses from '../../components/client/CardCourses';
 const Home = () => {

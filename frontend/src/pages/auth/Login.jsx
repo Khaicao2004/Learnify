@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import axiosInstance from "../../api/axios";
-import { useStateContext } from "../../contexts/contextProvider";
+import { useStateContext } from "../../contexts/contextprovider";
 const Login = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -15,6 +15,7 @@ const Login = () => {
         axiosInstance.post('login', payload).then(({data}) => {
             setUser(data.user);
             setToken(data.token);
+            
         }).catch(err => {
             const response = err.response;
             if (response && response.status === 422) {
