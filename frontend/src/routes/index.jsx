@@ -10,6 +10,8 @@ import UserList from '../pages/admin/users/UserList';
 import Login from '../pages/auth/Login';
 import AdminLayout from '../layouts/AdminLayout';
 import Dashboard from '../pages/admin/Dashboard';
+import MyLearning from '../pages/client/MyLearning';
+import MyLearningDetails from '../pages/client/MyLearningDetails';
 
 const router = createBrowserRouter([
     {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
                 path: '/teachers',
                 element: <Teachers />
             },
+            {
+                path: '/my-learning',
+                element: <MyLearning />
+            },
+            {
+                path: '/my-learning-details/:slug',
+                element: <MyLearningDetails />
+            }
         ]
     },
     {

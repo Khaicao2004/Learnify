@@ -1,23 +1,37 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { ChevronUpIcon, TvIcon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon, ChevronUpIcon, TvIcon } from '@heroicons/react/20/solid';
 import { COURSE_LEVEL_TEXT_MAP, COURSE_LEVEL_CLASS_MAP } from "../../constants";
 import LessonModal from "../../components/client/LessonModal";
 import { PlayCircleIcon } from "@heroicons/react/24/solid";
+// import { useStateContext } from "../../contexts/contextprovider";
 
 const CourseDetails = () => {
     const { slug } = useParams();
     const [course, setCourse] = useState(null);
     const [selectedLesson, setSelectedLesson] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    // const {user} = useStateContext();
+    const navigate = useNavigate();
     useEffect(() => {
         axiosInstance.get(`courses/${slug}`)
             .then(response => setCourse(response.data))
             .catch(error => console.error(error))
     }, [slug])
+
+    const handleEnroll = () => {
+        axiosInstance.post(`courses/${slug}/enroll`)
+            .then(response => {
+                setCourse(prev => ({
+                    ...prev,
+                    is_enrolled: true
+                }));
+                console.log(response.data);
+            })
+            .catch(error => console.error(error))
+    }
 
     return (
         <div className="container mx-auto px-4 py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -34,58 +48,51 @@ const CourseDetails = () => {
                 <div>
                     <h2 className="text-xl font-semibold py-6">Course content</h2>
                     {course?.sections?.map((section) => (
-                        <Disclosure as="div" key={section.id}>
-                            {({ open: sectionOpen }) => (
-                                <>
-                                    <DisclosureButton className="flex w-full justify-between items-center border border-gray-300 bg-gray-100 px-4 py-3 text-left text-sm font-medium text-blue-900 hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                                        <div className="flex gap-4">
-                                            <ChevronUpIcon
-                                                className={`${sectionOpen ? 'rotate-180 transform' : ''
-                                                    } h-5 w-5 text-gray-500`}
-                                            />
-                                            <span className="font-bold text-gray-800 text-base">{section.title}</span>
-                                        </div>
-                                        <span className="text-gray-500 text-sm font-normal">{section.lessons_count} lectures . {section.duration}min</span>
-                                    </DisclosureButton>
-                                    <DisclosurePanel className="px-4 pb-2 pt-2 text-sm text-gray-700">
-                                        <ul className="space-y-2">
-                                            {section.lessons?.map((lesson) => (
-                                                <li className="flex items-center justify-between" onClick={(() => setSelectedLesson(lesson))} key={lesson.id}>
-                                                    <div className="flex items-center gap-4">
-                                                        <TvIcon className="w-4" />
-                                                        {lesson.is_preview ? (
-                                                            <span className="text-sm hover:underline hover:text-blue-500" 
-                                                                onClick={() => {
-                                                                setSelectedLesson(lesson);
-                                                                setIsModalOpen(true);
-                                                            }}
-                                                        >{lesson.title}</span>
-                                                        ) : (
-                                                            <span className="text-sm">{lesson.title}</span>
-                                                        )
-                                                    }
+                        <Disclosure as="div" key={section.id} defaultOpen={false}>
+                            <DisclosureButton className="group flex w-full justify-between items-center border border-gray-300 bg-gray-100 px-4 py-3 text-left text-sm font-medium text-blue-900 hover:bg-gray-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 cursor-pointer">
+                                <div className="flex gap-4">
+                                    <ChevronDownIcon className="h-5 w-5 text-gray-500 group-data-open:rotate-180" />
+                                    <span className="font-bold text-gray-800 text-base">{section.title}</span>
+                                </div>
+                                <span className="text-gray-500 text-sm font-normal">{section.lessons_count} lectures . {section.duration}min</span>
+                            </DisclosureButton>
+                            <DisclosurePanel className="px-4 pb-2 pt-2 text-sm text-gray-700">
+                                <ul className="space-y-2">
+                                    {section.lessons?.map((lesson) => (
+                                        <li className="flex items-center justify-between" key={lesson.id}>
+                                            <div className="flex items-center gap-4">
+                                                <TvIcon className="w-4" />
+                                                {lesson.is_preview ? (
+                                                    <span className="text-sm hover:underline hover:text-blue-500 cursor-pointer" 
+                                                        onClick={() => {
+                                                        setSelectedLesson(lesson);
+                                                        setIsModalOpen(true);
+                                                    }}
+                                                >{lesson.title}</span>
+                                                ) : (
+                                                    <span className="text-sm">{lesson.title}</span>
+                                                )
+                                            }
+                                            </div>
+                                            {!!lesson.is_preview && (
+                                                <button onClick={() => {
+                                                    setSelectedLesson(lesson);
+                                                    setIsModalOpen(true);
+                                                }}
+                                                    className="text-blue-500 hover:text-blue-600 underline cursor-pointer"
+                                                >
+                                                    <div className="flex items-center">
+                                                        <PlayCircleIcon className="w-4" />
+                                                        <span className="text-sm">Preview</span>
                                                     </div>
-                                                    {!!lesson.is_preview && (
-                                                        <button onClick={() => {
-                                                            setSelectedLesson(lesson);
-                                                            setIsModalOpen(true);
-                                                        }}
-                                                            className="text-blue-500 hover:text-blue-600 underline"
-                                                        >
-                                                            <div className="flex items-center">
-                                                                <PlayCircleIcon className="w-4" />
-                                                                <span className="text-sm">Preview</span>
-                                                            </div>
-                                                        </button>
-                                                        )
-                                                    }
-                                                    <span className="text-xs text-gray-500">{lesson.duration} min</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </DisclosurePanel>
-                                </>
-                            )}
+                                                </button>
+                                                )
+                                            }
+                                            <span className="text-xs text-gray-500">{lesson.duration}min</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </DisclosurePanel>
                         </Disclosure>
                     ))}
                     {selectedLesson?.is_preview && (
@@ -116,11 +123,22 @@ const CourseDetails = () => {
                         <span className="text-gray-600">{course?.duration}min</span>
                     </li>
                 </ul>
-
-                {/* Nút enroll */}
-                <button className="w-full bg-slate-800 text-white py-3 uppercase font-semibold text-sm hover:bg-slate-900 transition">
-                    Enroll the Course
-                </button>
+                
+                {course?.is_enrolled ? (
+                    <button
+                        className="w-full bg-slate-800 text-white py-3 uppercase font-semibold text-sm hover:bg-slate-900 transition"
+                        onClick={() => navigate(`/my-learning-details/${course.slug}`)}
+                    >
+                        Go to course
+                    </button>
+                ) : 
+                (
+                    <button className="w-full bg-slate-800 text-white py-3 uppercase font-semibold text-sm hover:bg-slate-900 transition" onClick={handleEnroll}>
+                        Enroll the course
+                    </button>
+                )
+                }
+               
 
                 {/* Reviews */}
                 <div className="pt-6">

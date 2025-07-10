@@ -7,14 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
     // courses
     Route::get('limit-courses', [CourseController::class, 'homeCourses'])->name('courses.homeCourses');
     Route::get('courses', [CourseController::class, 'courses'])->name('courses');
     Route::get('courses/{slug}', [CourseController::class, 'courseDetails'])->name('teachers.courseDetails');
+    Route::get('my-learning', [CourseController::class, 'myLearning'])->name('courses.myLearning');
+    Route::get('my-learning-details/{slug}', [CourseController::class, 'myLearningDetails'])->name('courses.myLearningDetails');
+    Route::post('courses/{slug}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
     
     // Teacher
     Route::get('limit-teachers', [TeacherController::class, 'homeTeachers'])->name('teachers.homeTeachers');

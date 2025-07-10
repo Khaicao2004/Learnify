@@ -29,6 +29,7 @@ const Navbar = () => {
                         <a href="#" className="hover:text-blue-500">About</a>
                         <a href="/courses" className="hover:text-blue-500">Courses</a>
                         <a href="/teachers" className="hover:text-blue-500">Teachers</a>
+                        <a href="/my-learning" className="hover:text-blue-500">My Learning</a>
                         <a href="#" className="hover:text-blue-500">Contact</a>
                     </div>
                     {user && (
