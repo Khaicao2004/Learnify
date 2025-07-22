@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
-import { ChevronDownIcon, ChevronUpIcon, TvIcon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon, TvIcon } from '@heroicons/react/20/solid';
 import { COURSE_LEVEL_TEXT_MAP, COURSE_LEVEL_CLASS_MAP } from "../../constants";
 import LessonModal from "../../components/client/LessonModal";
 import { PlayCircleIcon } from "@heroicons/react/24/solid";
+import { toast } from "react-toastify";
 // import { useStateContext } from "../../contexts/contextprovider";
 
 const CourseDetails = () => {
@@ -21,16 +22,17 @@ const CourseDetails = () => {
             .catch(error => console.error(error))
     }, [slug])
 
-    const handleEnroll = () => {
-        axiosInstance.post(`courses/${slug}/enroll`)
-            .then(response => {
-                setCourse(prev => ({
-                    ...prev,
-                    is_enrolled: true
-                }));
-                console.log(response.data);
+    const handleAddToCart = () => {
+        axiosInstance.post(`add-to-cart`, {
+            course_id: course.id,
+        })
+            .then((response) => {
+                toast.success(response.data.message);
+                navigate('/cart')
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                toast.error(error.response.data.message);
+            })
     }
 
     return (
@@ -123,7 +125,6 @@ const CourseDetails = () => {
                         <span className="text-gray-600">{course?.duration}min</span>
                     </li>
                 </ul>
-                
                 {course?.is_enrolled ? (
                     <button
                         className="w-full bg-slate-800 text-white py-3 uppercase font-semibold text-sm hover:bg-slate-900 transition"
@@ -131,14 +132,11 @@ const CourseDetails = () => {
                     >
                         Go to course
                     </button>
-                ) : 
-                (
-                    <button className="w-full bg-slate-800 text-white py-3 uppercase font-semibold text-sm hover:bg-slate-900 transition" onClick={handleEnroll}>
-                        Enroll the course
-                    </button>
-                )
-                }
-               
+                ) : (
+                <button className="w-full bg-slate-800 text-white py-3 uppercase font-semibold text-sm hover:bg-slate-900 transition" onClick={handleAddToCart}>
+                    Add to cart
+                </button>
+                )}
 
                 {/* Reviews */}
                 <div className="pt-6">

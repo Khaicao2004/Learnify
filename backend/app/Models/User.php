@@ -21,8 +21,13 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone_number',
+        'address',
+        'avatar',
+        'bio',
         'password',
-        'role'
+        'role',
+        'status'
     ];
 
     /**
@@ -55,7 +60,7 @@ class User extends Authenticatable
 
     public function enrolledCourses()
     {
-        return $this->belongsToMany(Course::class, 'enrollments', 'user_id', 'course_id')->withPivot('enrolled_at');
+        return $this->belongsToMany(Course::class, 'enrollments', 'user_id', 'course_id');
     }
 
     public function lessonCompletions()

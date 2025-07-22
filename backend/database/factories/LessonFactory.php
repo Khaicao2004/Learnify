@@ -18,7 +18,7 @@ class LessonFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(3),
-            'video_path' => 'https://www.youtube.com/watch?v=IYerLGVTEcM&list=RDIYerLGVTEcM&start_radio=1',
+            'video_path' => 'https://www.youtube.com/embed/CPbCsL_Ge4g?si=78yrbJzRj7EXqvBl',
             'duration' => $this->faker->numberBetween(20, 30),
             'content' => $this->faker->paragraph(),
             'sort_order' => $this->faker->numberBetween(1, 10)
