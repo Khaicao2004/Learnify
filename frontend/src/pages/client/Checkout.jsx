@@ -10,6 +10,7 @@ const Checkout = () => {
   const {user} = useStateContext();
   const navigate = useNavigate();
   const [phone, setPhone] = useState(user.phone_number);
+  
   useEffect(() => {
     axiosInstance.get(`cart`)
       .then(response => {
