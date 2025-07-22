@@ -21,11 +21,12 @@ class EnrollmentSeeder extends Seeder
         foreach ($students as $student) {
             $studentCourses = $courses->random(2);
 
-            foreach($studentCourses as $course){
+            foreach ($studentCourses as $course) {
                 Enrollment::query()->create([
                     'user_id' => $student->id,
                     'course_id' => $course->id,
-                    'enrolled_at' => now()->subDays(rand(1, 30)),
+                    'created_at' => now()->subDays(rand(1, 30)),
+                    'updated_at' => now()->subDays(rand(1, 30)),
                 ]);
             }
         }

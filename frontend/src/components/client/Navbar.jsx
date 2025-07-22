@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import axiosInstance from "../../api/axios";
 import { useStateContext } from "../../contexts/contextprovider";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 const Navbar = () => {
     const {user, setUser, token, setToken} = useStateContext();
      if(!token) {
@@ -33,7 +34,8 @@ const Navbar = () => {
                         <a href="#" className="hover:text-blue-500">Contact</a>
                     </div>
                     {user && (
-                        <div className="hidden md:block space-x-2">
+                        <div className="hidden md:flex justify-end items-center space-x-4">
+                            <a href="/cart" className="hover:text-blue-500"><ShoppingCartIcon className="w-6 h-6" /></a>
                             <span>{user.name}</span>
                             <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" onClick={onLogout}>Logout</button>
                         </div>

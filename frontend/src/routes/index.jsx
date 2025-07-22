@@ -6,12 +6,11 @@ import Courses from '../pages/client/Courses';
 import Teachers from '../pages/client/Teachers';
 import Register from '../pages/auth/Register';
 import UserLayout from '../layouts/UserLayout';
-import UserList from '../pages/admin/users/UserList';
 import Login from '../pages/auth/Login';
-import AdminLayout from '../layouts/AdminLayout';
-import Dashboard from '../pages/admin/Dashboard';
 import MyLearning from '../pages/client/MyLearning';
 import MyLearningDetails from '../pages/client/MyLearningDetails';
+import Cart from '../pages/client/Cart';
+import Checkout from '../pages/client/Checkout';
 
 const router = createBrowserRouter([
     {
@@ -41,6 +40,14 @@ const router = createBrowserRouter([
             {
                 path: '/my-learning-details/:slug',
                 element: <MyLearningDetails />
+            },
+            {
+                path: '/cart',
+                element: <Cart />
+            },
+            {
+                path: '/checkout',
+                element: <Checkout />
             }
         ]
     },
@@ -55,20 +62,6 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register />
-            },
-        ]
-    },
-    {
-        path: 'admin/',
-        element: <AdminLayout />,
-        children: [
-            {
-                index: true,
-                element: <Dashboard />
-            },
-            {
-                path: 'users',
-                element: <UserList />
             },
         ]
     },

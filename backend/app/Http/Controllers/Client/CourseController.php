@@ -17,7 +17,8 @@ class CourseController extends Controller
         return response()->json($limitCourses);
     }
 
-    public function courses() {
+    public function courses()
+    {
         $courses = Course::query()
             ->with(['teacher', 'category'])
             ->withCount('enrolledStudents')
@@ -26,7 +27,8 @@ class CourseController extends Controller
         return response()->json($courses);
     }
 
-    public function courseDetails(string $slug){
+    public function courseDetails(string $slug)
+    {
         $course = Course::query()
             ->with(['sections.lessons', 'teacher', 'category'])
             ->withCount('enrolledStudents')
@@ -38,17 +40,20 @@ class CourseController extends Controller
         return response()->json($course);
     }
 
-    public function myLearning(){
-        $myCourses = Course::query()->with(['teacher', 'category'])
+    public function myLearning()
+    {
+        $myCourses = Course::query()->with(['teacher', 'category', 'enrolledStudents'])
             ->withCount('enrolledStudents')
-            ->whereHas('enrolledStudents', function($query){
+            ->withCount('sections')
+            ->whereHas('enrolledStudents', function ($query) {
                 $query->where('user_id', request()->user()->id);
             })
             ->paginate(6);
         return response()->json($myCourses);
     }
 
-    public function myLearningDetails(string $slug){
+    public function myLearningDetails(string $slug)
+    {
         $course = Course::query()
             ->with(['sections.lessons', 'teacher', 'category'])
             ->withCount('enrolledStudents')
@@ -57,9 +62,4 @@ class CourseController extends Controller
         return response()->json($course);
     }
 
-    public function enroll(string $slug){
-        $course = Course::query()->where('slug', $slug)->first();
-        $course->enrolledStudents()->attach(request()->user()->id);
-        return response()->json($course);
-    }
 }

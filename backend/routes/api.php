@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\Authenticate;
+use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\CourseController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\TeacherController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function(){
@@ -13,7 +15,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('courses/{slug}', [CourseController::class, 'courseDetails'])->name('teachers.courseDetails');
     Route::get('my-learning', [CourseController::class, 'myLearning'])->name('courses.myLearning');
     Route::get('my-learning-details/{slug}', [CourseController::class, 'myLearningDetails'])->name('courses.myLearningDetails');
-    Route::post('courses/{slug}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
     
     // Teacher
     Route::get('limit-teachers', [TeacherController::class, 'homeTeachers'])->name('teachers.homeTeachers');
@@ -21,7 +22,12 @@ Route::middleware('auth:sanctum')->group(function(){
 
     // logout
     Route::post('logout', [Authenticate::class, 'logout'])->name('auth.logout');
+    Route::apiResource('users', UserController::class);
 
+    // Cart
+    Route::get('cart', [CartController::class, 'list'])->name('cart.list');
+    Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('cart.addToCart');
+    Route::post('checkout', [OrderController::class, 'checkout'])->name('checkout');
 });
 
 //auth
